@@ -1,7 +1,7 @@
 import AcastEmbed from './AcastEmbed';
-import { LOAD, PAUSE, PLAY, SEEK, LOAD_META_DATA } from './constants';
+import { LOAD, PAUSE, PLAY, SEEK } from './constants';
 
-export const Events = { LOAD, PAUSE, PLAY, SEEK, LOAD_META_DATA };
+export const Events = { LOAD, PAUSE, PLAY, SEEK };
 
 const elements = new WeakMap();
 export const create = (element) => {

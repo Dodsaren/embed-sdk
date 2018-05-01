@@ -1,4 +1,4 @@
-import { LOAD, PAUSE, PLAY, SEEK, LOAD_META_DATA } from "./constants";
+import { LOAD, PAUSE, PLAY, SEEK } from "./constants";
 
 const isIframe = element => element.tagName.toLowerCase() === 'iframe';
 
@@ -16,7 +16,6 @@ const EVENT_MAP = {
   "postmessage:on:pause": PAUSE,
   "postmessage:on:play": PLAY,
   "postmessage:on:seek": SEEK,
-  "postmessage:on:loadmetadata": LOAD_META_DATA,
 };
 
 const messageFromEvent = ({ data: message = {} } = {}) => ({
@@ -35,3 +34,18 @@ export const createMessageListener = eventEmitter => {
 
   return () => window.removeEventListener('message', handleMessageEvent);
 }
+
+const canPromise = !!window.Promise;
+
+export const promiseOrCallback = (eventEmitter, postMessage, message, callback) => {
+  postMessage.publish(messageName);
+  if (canPromise) {
+    return new Promise(resolve => {
+      eventEmitter.once(message, resolve);
+    });
+  }
+
+  eventEmitter.once("postmessage:get:isplaying", callback);
+
+  return undefined;
+};
