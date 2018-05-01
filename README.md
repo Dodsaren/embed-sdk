@@ -41,14 +41,15 @@ When you get the widget object with the help of the AcastEmbed.of method, you'll
 * `pause()` - Pause audio.
 * `toggle(play: boolean)` - Toggle between playing and pausing audio.
 * `seek(seconds: number)` - Seek audio.
-* `on(eventType: string, listener: () => void)` - Adds a listener method for the specified eventName. See below for the list of possible event types.
-* `off(eventType: string, listener?: () => void)` - If only one argument is passed, all listeners for that event will be removed.
+* `subscribe(eventType: string, listener: () => void)` - Adds a listener method for the specified eventName. See below for the list of possible event types.
+* `unsubscribe(eventType: string, listener?: () => void)` - If only one argument is passed, all listeners for that event will be removed.
 
 ### Getters
 The following methods are grouped as "Getters" because they return a value and does not modify the state of the player. All getters are asynchronous which means you'll have to pass a callback method or if your environment supports it the getter will return a `Promise`.
 * `isPlaying(callback?: (playing: boolean) => void)?: Promise`
 * `getProgress(callback?: (progress: number) => void)?: Promise`
 * `getDuration(callback?: (duration: number) => void)?: Promise`
+* `getCurrent(callback?: (options: { rss: string, guid: string }) => void)?: Promise`
 
 ### Event Types
 The embed player can notify you when state changes by emitting events. Use the `on` method to subscribe to events. The following events can be subscribed to:
