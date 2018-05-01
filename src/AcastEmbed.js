@@ -38,12 +38,18 @@ export default class AcastEmbed {
   }
 
   toggle(play) {
-    this.postMessage.publish(
-      play ? "postmessage:do:play" : "postmessage:do:toggle"
-    );
+    if (play) {
+      this.postMessage.publish("postmessage:do:play")
+    } else if (play === false) {
+      this.postMessage.publish("postmessage:do:pause")
+    } else {
+      this.postMessage.publish("postmessage:do:toggle");
+    }
   }
 
-  seek(seconds) {}
+  seek(seconds) {
+    this.postMessage.publish("postmessage:do:seek", seconds);
+  }
 
   isPlaying(callback) {
     return promiseOrCallback(
