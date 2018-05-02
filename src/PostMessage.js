@@ -22,20 +22,13 @@ export default class PostMessage {
         callback && callback();
         this.iframe.removeEventListener("load", handleIframeLoad);
       };
-      
+
       this.iframe.src = 'https://embed.acast.com/varvet/-247-rachel-yogagirl-brathen';
       this.iframe.addEventListener("load", handleIframeLoad);
     }
   }
 
   publish(eventName, data) {
-    const sendMessage = () => postMessage(this.iframe.contentWindow, eventName, data);
-
-    const pingReceiver = () => {
-      this.eventEmitter.once("postmessage:pong", sendMessage);
-      postMessage(this.iframe.contentWindow, "postmessage:ping");
-    };
-
-    this.load(pingReceiver);
+    postMessage(this.iframe.contentWindow, eventName, data);
   }
 }
