@@ -16,7 +16,7 @@ const EVENT_MAP = {
   "postmessage:on:pause": PAUSE,
   "postmessage:on:play": PLAY,
   "postmessage:on:seek": SEEK,
-};
+};al
 
 const messageFromEvent = ({ data: message = {} } = {}) => ({
   name: message.eventName,
@@ -31,8 +31,9 @@ export const createMessageListener = eventEmitter => {
   };
 
   window.addEventListener('message', handleMessageEvent);
+  const removeMessageEvent = () => window.removeEventListener('message', handleMessageEvent);
 
-  return () => window.removeEventListener('message', handleMessageEvent);
+  return removeMessageEvent;
 }
 
 const canPromise = !!window.Promise;

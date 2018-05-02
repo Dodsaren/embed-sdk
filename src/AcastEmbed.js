@@ -16,9 +16,9 @@ export default class AcastEmbed {
     this.eventEmitter = new EventEmitter();
     this.postMessage = new PostMessage(iframe, this.eventEmitter);
 
-    const removeEventListener = createMessageListener(this.eventEmitter);
+    const removeMessageListener = createMessageListener(this.eventEmitter);
     this.destroy = () => {
-      removeEventListener();
+      removeMessageListener();
       if (element !== iframe) {
         element.removeChild(iframe);
       }
