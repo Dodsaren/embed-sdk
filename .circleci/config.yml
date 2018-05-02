@@ -1,6 +1,6 @@
 references:
   workspace_root: &workspace_root
-    ~/repo
+    ~/embed-sdk
   attach_workspace: &attach_workspace
     attach_workspace:
       at: *workspace_root
@@ -19,9 +19,8 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-      - run: yarn install
+      - run: npm install
       - persist_to_workspace:
           root: *workspace_root
           paths:
