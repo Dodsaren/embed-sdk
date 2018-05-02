@@ -5,12 +5,16 @@ export default class EventEmitter {
 
   off(eventName, listener) {
     if (!listener) {
-      this.events[listener] = undefined;
+      this.events[eventName] = undefined;
     } else {
-      const eventListeners = this.events[eventName];
-      if (eventListeners) {
-        const indexOfListener = eventListeners.indexOf(listener);
+      const eventListeners = this.events[eventName] || [];
+      const indexOfListener = eventListeners.indexOf(listener);
+      if (indexOfListener > -1) {
         eventListeners.splice(indexOfListener, 1);
+      }
+
+      if (!eventListeners.length) {
+        this.events[eventName] = undefined;
       }
     }
   }
