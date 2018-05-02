@@ -1,14 +1,10 @@
-import EventEmitter from "./EventEmitter";
-import { createMessageFromEvent } from "./utils";
-
 const postMessage = (receiver, eventName, data) =>
   receiver.postMessage({ eventName, data }, "*");
 
 export default class PostMessage {
-  constructor(iframe, eventEmitter) {
+  constructor(iframe) {
     this.loaded = false;
     this.iframe = iframe;
-    this.eventEmitter = eventEmitter;
 
     this.load();
   }
@@ -29,6 +25,8 @@ export default class PostMessage {
   }
 
   publish(eventName, data) {
-    postMessage(this.iframe.contentWindow, eventName, data);
+    this.load(() => {
+      postMessage(this.iframe.contentWindow, eventName, data);
+    });
   }
 }
