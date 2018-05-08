@@ -38,15 +38,16 @@ export const createMessageListener = eventEmitter => {
 
 const canPromise = !!window.Promise;
 
-export const promiseOrCallback = (eventEmitter, postMessage, message, callback) => {
-  postMessage.publish(messageName);
+export const promiseOrCallback = (eventEmitter, postMessage, messageName, callback) => {
   if (canPromise) {
     return new Promise(resolve => {
-      eventEmitter.once(message, resolve);
+      eventEmitter.once(messageName, resolve);
+      postMessage.publish(messageName);
     });
   }
 
-  eventEmitter.once("postmessage:get:isplaying", callback);
+  eventEmitter.once(messageName, callback);
+  postMessage.publish(messageName);
 
   return undefined;
 };
