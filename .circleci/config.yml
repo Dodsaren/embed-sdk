@@ -1,9 +1,9 @@
-references:
-  workspace_root: &workspace_root
-    ~/embed-sdk
-  attach_workspace: &attach_workspace
-    attach_workspace:
-      at: *workspace_root
+workspace_root: &workspace_root
+  ~/embed-sdk
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: *workspace_root
 
 defaults: &defaults
   working_directory: *workspace_root
@@ -73,6 +73,12 @@ workflows:
     jobs:
       - install
       - build:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - test:
           requires:
             - install
           filters:
