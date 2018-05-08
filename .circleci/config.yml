@@ -18,8 +18,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+          - dependencies-{{ checksum "package.json" }}
+          - dependencies-
       - run: npm install
       - persist_to_workspace:
           root: *workspace_root
@@ -33,7 +33,19 @@ jobs:
       - *attach_workspace
       - run: npm run build
       - save_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
+
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/node:8.5
+    steps:
+      - *attach_workspace
+      - run: npm run test
+      - save_cache:
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
 
@@ -43,7 +55,7 @@ jobs:
       - image: wilson208/circleci-awscli
     steps:
       - restore_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run: aws s3 sync dist/ s3://acast-cdn/embed-sdk/dev
 
   deploy_prod:
@@ -52,7 +64,7 @@ jobs:
       - image: wilson208/circleci-awscli
     steps:
       - restore_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run: aws s3 sync dist/ s3://acast-cdn/embed-sdk/{{ .Environment.CIRCLE_TAG }}
 
 workflows:
@@ -69,6 +81,7 @@ workflows:
       - deploy_stage:
           requires:
             - build
+            - test
           filters:
             branches:
               only:
@@ -79,6 +92,7 @@ workflows:
           type: approval
           requires:
             - build
+            - test
           filters:
             branches:
               ignore: /.*/
