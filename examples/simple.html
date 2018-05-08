@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Simple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      display: flex;
+      box-sizing: border-box;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
+    }
+
+    figure {
+      margin: 0;
+      width: 720px;
+    }
+
+    figure > img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      width: 100%;
+      height: 40px;
+      border: 0;
+      background-color: black;
+      font-size: 16px;
+      color: white;
+    }
+
+    .player {
+      position: fixed;
+      width: 100%;
+      left: 0;
+      top: 100%;
+      transition: transform 250ms ease-out;
+    }
+
+    .player>iframe {
+      vertical-align: middle;
+    }
+
+    .player--active {
+      transform: translateY(-100%);
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <figure>
+      <img src="http://placekitten.com/720/360" />
+      <figcaption>
+        <h2>Some Article</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper, odio eget elementum efficitur, dui odio vehicula
+          odio, sed faucibus augue lacus id purus. Donec tempus urna sed dui elementum, ut consequat lacus gravida. Class
+          aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec sed viverra lectus.
+          Donec posuere, lectus eu porttitor accumsan, ipsum erat suscipit justo, tincidunt lobortis eros erat consequat
+          dui. In blandit ex aliquam ex ultricies, eget sollicitudin sem pretium. Donec eget nunc nec nisl posuere venenatis
+          a ut augue. Quisque vel nisl a augue laoreet facilisis id eget lorem. Aliquam ut mi euismod nulla commodo cursus.
+          Phasellus sit amet lorem at est iaculis ultrices nec ultricies erat.
+        </p>
+        <button id="play-button">Play</button>
+      </figcaption>
+    </figure>
+  </main>
+
+  <div id="player" class="player"></div>
+  <script src="../dist/acast-embed.umd.js"></script>
+  <script>
+    const playerElement = document.getElementById('player');
+    const buttonElement = document.getElementById('play-button');
+    const player = AcastEmbed.create(playerElement);
+
+    let isPlaying = false;
+    player.subscribe(AcastEmbed.Events.PLAY, function onPlay() {
+      isPlaying = true;
+      playerElement.classList.add('player--active');
+      buttonElement.textContent = 'Stop Playing';
+    });
+
+    player.subscribe(AcastEmbed.Events.PAUSE, function onPlay() {
+      isPlaying = false;
+      buttonElement.textContent = 'Play';
+    });
+
+    buttonElement.addEventListener('click', function onClick(event) {
+      if (isPlaying) {
+        player.pause();
+        playerElement.classList.remove('player--active');
+      } else {
+        player.play(); 
+      }
+    });
+  </script>
+</body>
+
+</html>
