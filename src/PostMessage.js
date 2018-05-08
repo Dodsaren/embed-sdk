@@ -19,7 +19,7 @@ export default class PostMessage {
         this.iframe.removeEventListener("load", handleIframeLoad);
       };
 
-      this.iframe.src = 'https://embed.acast.com/varvet/-247-rachel-yogagirl-brathen';
+      this.iframe.src = 'https://embed.acast.com/';
       this.iframe.addEventListener("load", handleIframeLoad);
     }
   }
