@@ -25,17 +25,6 @@ jobs:
           root: *workspace_root
           paths:
             - .
-  build:
-    <<: *defaults
-    docker:
-      - image: circleci/node:8.5
-    steps:
-      - *attach_workspace
-      - run: npm run build
-      - save_cache:
-          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
 
   test:
     <<: *defaults
@@ -44,6 +33,14 @@ jobs:
     steps:
       - *attach_workspace
       - run: npm run test
+
+  build:
+    <<: *defaults
+    docker:
+      - image: circleci/node:8.5
+    steps:
+      - *attach_workspace
+      - run: npm run build
       - save_cache:
           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
