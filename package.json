@@ -17,7 +17,7 @@
     "url": "git+https://github.com/acastSthlm/embed-sdk.git"
   },
   "keywords": [],
-  "author": "Emil Nordh <emil@acast.com>",
+  "author": "Acast AB",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/acastSthlm/embed-sdk/issues"
@@ -34,6 +34,7 @@
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-config-acast": "^1.1.1",
+    "husky": "^0.14.3",
     "jest": "^22.4.3",
     "lint-staged": "^7.1.0",
     "minimist": "^1.2.0",
