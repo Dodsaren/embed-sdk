@@ -1,4 +1,4 @@
-import PostMessage from "./PostMessage";
+import PostMessage from './PostMessage';
 
 describe('PostMessage', () => {
   let iframe;
@@ -14,7 +14,8 @@ describe('PostMessage', () => {
   });
 
   it('should load iframe on initiation', () => {
-    const postMessage = new PostMessage(iframe);
+    // eslint-disable-next-line no-new
+    new PostMessage(iframe);
 
     expect(iframe.addEventListener).toHaveBeenCalledWith('load', expect.any(Function));
   });
@@ -27,6 +28,7 @@ describe('PostMessage', () => {
       expect(iframe.removeEventListener).toHaveBeenCalledWith('load', expect.any(Function));
     });
 
+    // eslint-disable-next-line no-new
     new PostMessage(iframe);
   });
 

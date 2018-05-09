@@ -1,4 +1,4 @@
-import { LOAD, PAUSE, PLAY, SEEK } from "./constants";
+import { LOAD, PAUSE, PLAY, SEEK } from './constants';
 
 const isIframe = element => element.tagName.toLowerCase() === 'iframe';
 
@@ -12,10 +12,10 @@ export const createIframeFromElement = (element, { width = '100%', height = 90 }
 };
 
 const EVENT_MAP = {
-  "postmessage:on:load": LOAD,
-  "postmessage:on:pause": PAUSE,
-  "postmessage:on:play": PLAY,
-  "postmessage:on:seek": SEEK,
+  'postmessage:on:load': LOAD,
+  'postmessage:on:pause': PAUSE,
+  'postmessage:on:play': PLAY,
+  'postmessage:on:seek': SEEK,
 };
 
 const messageFromEvent = ({ data: message = {} } = {}) => ({
@@ -34,7 +34,7 @@ export const createMessageListener = eventEmitter => {
   const removeMessageEvent = () => window.removeEventListener('message', handleMessageEvent);
 
   return removeMessageEvent;
-}
+};
 
 const canPromise = !!window.Promise;
 

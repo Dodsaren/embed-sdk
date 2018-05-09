@@ -38,7 +38,7 @@ export default class EventEmitter {
   trigger(eventName, eventData) {
     const eventListeners = this.events[eventName];
     if (eventListeners) {
-      eventListeners.forEach((listener) => {
+      eventListeners.forEach(listener => {
         listener(eventData);
       });
     }

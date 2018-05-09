@@ -1,5 +1,6 @@
-const postMessage = (receiver, eventName, data) =>
-  receiver.postMessage({ eventName, data }, "*");
+const postMessage = (receiver, eventName, data) => receiver.postMessage({ eventName, data }, '*');
+
+const maybeRunCallback = callback => typeof callback === 'function' && callback();
 
 export default class PostMessage {
   constructor(iframe) {
@@ -11,16 +12,16 @@ export default class PostMessage {
 
   load(callback) {
     if (this.loaded) {
-      callback && callback();
+      maybeRunCallback(callback);
     } else {
       const handleIframeLoad = () => {
         this.loaded = true;
-        callback && callback();
-        this.iframe.removeEventListener("load", handleIframeLoad);
+        maybeRunCallback(callback);
+        this.iframe.removeEventListener('load', handleIframeLoad);
       };
 
       this.iframe.src = 'https://embed.acast.com/';
-      this.iframe.addEventListener("load", handleIframeLoad);
+      this.iframe.addEventListener('load', handleIframeLoad);
     }
   }
 

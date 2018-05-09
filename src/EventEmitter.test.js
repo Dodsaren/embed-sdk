@@ -53,5 +53,5 @@ describe('EventEmitter', () => {
 
     expect(firstListenerSpy).toHaveBeenCalledTimes(0);
     expect(secondListenerSpy).toHaveBeenCalledTimes(0);
-  })
+  });
 });

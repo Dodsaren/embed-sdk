@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rollup -c --environment BUILD:production",
     "dev": "rollup -c -w",
-    "test": "BABEL_ENV=test jest --maxWorkers=2"
+    "test": "BABEL_ENV=test jest --maxWorkers=2",
+    "lint": "eslint --ext js src/**/*.js --max-warnings=0"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,11 @@
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-acast": "^1.1.1",
     "jest": "^22.4.3",
     "minimist": "^1.2.0",
+    "prettier": "^1.12.1",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-uglify": "^3.0.0"
